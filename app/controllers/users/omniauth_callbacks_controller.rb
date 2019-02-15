@@ -2,7 +2,7 @@
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should configure your model like this:
-  # users :omniauthable, omniauth_providers: [:twitter]
+  # devise :omniauthable, omniauth_providers: [:twitter]
 
   # You should also create an action method in this controller like this:
   # def twitter
@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   super
   # end
 
-  # GET|POST /users/auth/twitter/callback
+  # GET|POST /devise/auth/twitter/callback
   # def failure
   #   super
   # end
