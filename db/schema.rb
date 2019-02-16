@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_02_15_211320) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.boolean "offered"
+    t.boolean "offered", default: true
     t.decimal "current_bid"
     t.string "image"
     t.text "description"
