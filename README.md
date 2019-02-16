@@ -4,7 +4,7 @@
 * `git clone https://github.com/AmberWilkie/bb-auction`
 * `rvm use 2.5.3` (or later version of Ruby)
 * `bundle`
-* `rails db:migrage`
+* `rails db:migrate`
 * `rails db:seed`
 * Sample user: `verona@verona.com`, `Verona`. Seeds generate email and password pairs in this pattern, using first names (see seed file).
 * Tests with Rspec: `rspec`
@@ -14,7 +14,7 @@
 * [RSpec](https://github.com/rspec/rspec-rails) for testing.
 * [Pry](https://github.com/rweng/pry-rails) for debugging.
 * [Bootstrap](https://github.com/twbs/bootstrap-rubygem) for styling templates. 
-* [Faker](https://github.com/stympy/faker) for lorem ipsum text.
+* [Faker](https://github.com/stympy/faker) for lorem ipsum text (but not for names and emails to make it easier to move between users).
 
 ## Special thanks
 To [Start Bootstrap](https://startbootstrap.com/themes/) for the HTML and CSS templates.
