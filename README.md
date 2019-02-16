@@ -1,4 +1,23 @@
+# Demo basic auction site
 
+## Installation
+* `git clone https://github.com/AmberWilkie/bb-auction`
+* `rvm use 2.5.3` (or later version of Ruby)
+* `bundle`
+* `rails db:migrage`
+* `rails db:seed`
+* Sample user: `verona@verona.com`, `Verona`. Seeds generate email and password pairs in this pattern, using first names (see seed file).
+* Tests with Rspec: `rspec`
+
+## Dependencies
+* [Devise](https://github.com/plataformatec/devise) for user creation and authentication.
+* [RSpec](https://github.com/rspec/rspec-rails) for testing.
+* [Pry](https://github.com/rweng/pry-rails) for debugging.
+* [Bootstrap](https://github.com/twbs/bootstrap-rubygem) for styling templates. 
+* [Faker](https://github.com/stympy/faker) for lorem ipsum text.
+
+## Special thanks
+To [Start Bootstrap](https://startbootstrap.com/themes/) for the HTML and CSS templates.
 
 ## Ideas for improvement
 

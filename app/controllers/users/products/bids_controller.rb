@@ -1,4 +1,6 @@
 class Users::Products::BidsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     bid = product.bids.new(user: current_user, amount: bid_amount, open: true)
     success = Users::Products::BidCreator.new(bid, bid_amount, current_user).call
