@@ -13,7 +13,11 @@
       <th scope="row"><%= product.id %></th>
       <td><%= product.name.titleize %></td>
       <td><%= product.bids.any? ? "€#{product.current_amount_bid} by" : 'No bids yet' %> <%= product.current_bid&.user&.name %></td>
-      <td><%= product.offered ? 'Still open' : "€#{product.selling_price}" %></td>
+      <td>
+        <% if !product.offered && !product.selling_price %>Closed; did not sell<% end %>
+        <% if !product.offered && product.selling_price %>€<%=product.selling_price %><% end %>
+        <% if product.offered && !product.selling_price %>Still open<% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>
