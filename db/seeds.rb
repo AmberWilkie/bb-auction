@@ -1,5 +1,6 @@
-User.destroy_all
+Bid.destroy_all
 Product.destroy_all
+User.destroy_all
 
 names = [
   'Jacinta Simien',
@@ -69,14 +70,23 @@ https://c.pxhere.com/images/48/5a/cdfbe9bd1f158824fb715953ca04-1419113.jpg!d
 (0..19).to_a.each do |num|
   name = names[num]
   first_name = name.split(' ').first
-  u = User.create(name: name, email: "#{first_name}@#{first_name}.com", password: first_name)
+  u = User.create(name: name,
+                  email: "#{first_name}@#{first_name}.com",
+                  password: first_name,
+                  money: rand(1000..10000).round(2))
 
   5.times do
     Product.create(name: "#{product_adjectives.sample} #{product_nouns.sample}",
                    user_id: u.id,
-                   min_price: rand(1...10000).round(2),
+                   min_price: rand(1...1000).round(2),
                    image: product_images.sample,
                    offered: true,
                    description: Faker::Lorem.sentences(rand(1...15)).join(' '))
   end
+end
+
+20.times do
+  owner, bidder = User.all.sample(2)
+  product = owner.products.sample
+  Bid.create(user: bidder, product: product, amount: product.min_price + rand(1..100), open: true)
 end

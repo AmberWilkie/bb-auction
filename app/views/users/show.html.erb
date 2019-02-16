@@ -3,23 +3,66 @@
     <div class="col-sm-9 col-md-9 col-lg-12 mx-auto">
       <div class="card card-signin my-5 padding-s">
         <h1 class="my-4"><%= @user.name %> Store
-          <small>Buy some stuff!</small>
+          <small>
+            <% if @is_current_user %>
+              Manage your auctions
+              <%= render 'users/partials/income' %>
+            <% else %>
+              Buy some stuff!
+            <% end %>
+          </small>
         </h1>
 
-        <% @user.products.each do |product| %>
+        <% @products.each do |product| %>
+          <% next if !@is_current_user && !product.offered %>
+          <a name=<%= product.id %>></a>
           <div class="row">
             <div class="col-md-7">
-                <img class="img-fluid rounded mb-3 mb-md-0" src=<%= product.image %> alt="">
-              <% unless product.current_bid %><h4 class="image-overlay">No one has bid yet!</h4><% end %>
+              <img class="img-fluid rounded mb-3 mb-md-0" src=<%= product.image %> alt="">
+              <% unless product.current_bid %><h4 class="image-overlay">No one has bid yet!</h4>
+              <% end %>
             </div>
             <div class="col-md-5">
               <h3><%= product.name.titleize %></h3>
               <p><%= product.description %></p>
-              <% if product.current_bid %><h4>Current bid: <%= product.current_bid %></h4><% end %>
-              <a class="btn btn-primary" href="#">Bid!</a>
+              <% if product.current_bid && product.offered %>
+                <h4>
+                  <% if product.current_bid.user == current_user %>
+                    You bid:
+                  <% else %>
+                    Current bid:
+                  <% end %>
+                  €<%= product.current_amount_bid %>
+                </h4>
+              <% else %>
+                Bidding starts at €<%= product.min_price %>
+              <% end %>
+              <% if @is_current_user && product.current_bid && !product.offered %>
+                <h4>Sold for €<%= product.selling_price %></h4>
+              <% elsif @is_current_user && product.current_bid && product.offered %>
+
+                <%= link_to "Accept €#{product.current_amount_bid} and close auction",
+                            accept_users_products_bid_path(product, current_bid: product.current_bid),
+                            class: "btn btn-primary", method: :post %>
+
+              <% elsif !@is_current_user %>
+
+                <%= form_for(:bid, url: users_products_bids_path(product: product), methd: :post) do |f| %>
+                  <div class="form-label-group">
+                    <%= f.text_field :amount, class: 'form-control', autofocus: true, required: true %>
+                  </div>
+                  <% if flash[:bid_error] && flash[:bid_error]['product_id'] == product.id %>
+                    <p class="alert"><%= flash[:bid_error]['message'] %></p>
+                  <% end %>
+                  <% if flash[:bid_success] && flash[:bid_success]['product_id'] == product.id %>
+                    <p class="alert notice"><%= flash[:bid_success]['message'] %></p>
+                  <% end %>
+                  <%= f.submit "Bid", class: "btn btn-lg btn-primary btn-block" %>
+
+                <% end %>
+              <% end %>
             </div>
           </div>
-
           <hr>
         <% end %>
       </div>

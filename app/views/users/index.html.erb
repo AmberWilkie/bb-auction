@@ -3,6 +3,7 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="list-group">
+          <h4 class="my-4 align-center">Whose store to shop at?</h4>
           <% @users.each do |user| %>
             <%= link_to user_path(user), class: "list-group-item list-group-item-action" do %>
               <%= user.name %>
